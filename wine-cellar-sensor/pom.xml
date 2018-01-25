@@ -84,12 +84,9 @@
 	      <groupId>io.vertx</groupId>
 	      <artifactId>vertx-web</artifactId>
 	    </dependency>
-
-
 		<dependency>
 		  <groupId>io.vertx</groupId>
 		  <artifactId>vertx-auth-common</artifactId>
-		  <version>3.4.2</version>
 		</dependency>
 
 	</dependencies>

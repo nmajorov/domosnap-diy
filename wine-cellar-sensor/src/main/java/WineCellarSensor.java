@@ -39,14 +39,12 @@ import com.pi4j.component.lcd.LCDTextAlignment;
 import com.pi4j.component.lcd.impl.I2CLcdDisplay;
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
 
 
 public class WineCellarSensor extends AbstractVerticle {
 
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+//	private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	
 	
 	@Override
