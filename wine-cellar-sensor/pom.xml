@@ -1,0 +1,235 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.domosnap</groupId>
+	<artifactId>wine-cellar-sensor</artifactId>
+	<packaging>jar</packaging>
+	<name>DomoSnapWineCellar</name>
+	<description>Domosnap Wine Cellar application</description>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<!-- Build Configuration -->
+	<properties>
+		<licence.plugin.version>1.7</licence.plugin.version>
+		<file.encoding>UTF-8</file.encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- vert.x properties -->
+		<vertx.version>3.4.2</vertx.version>
+		<vertx.verticle>com.domosnap.microservice.data.event.ConnectorRestMicroservice</vertx.verticle>
+		<!-- Maven plugins -->
+		<fabric8-vertx-maven-plugin.version>1.0.5</fabric8-vertx-maven-plugin.version>
+
+		<pi4j.version>1.1</pi4j.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.vertx</groupId>
+				<artifactId>vertx-dependencies</artifactId>
+				<version>${vertx.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<!-- Dependecies Management -->
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.domosnap</groupId>
+			<artifactId>engine</artifactId>
+			<version>0.1.9-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.domosnap</groupId>
+			<artifactId>i2c-connector</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.pi4j</groupId>
+			<artifactId>pi4j-device</artifactId>
+			<version>${pi4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.pi4j</groupId>
+			<artifactId>pi4j-core</artifactId>
+			<version>${pi4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.pi4j</groupId>
+					<artifactId>pi4j-native</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
+		</dependency>
+		<dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-infinispan</artifactId>
+    </dependency>
+        <dependency>
+	      <groupId>io.vertx</groupId>
+	      <artifactId>vertx-web</artifactId>
+	    </dependency>
+
+
+		<dependency>
+		  <groupId>io.vertx</groupId>
+		  <artifactId>vertx-auth-common</artifactId>
+		  <version>3.4.2</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>vertx-maven-plugin</artifactId>
+				<version>${fabric8-vertx-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>vmp</id>
+						<goals>
+							<goal>initialize</goal>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<redeploy>true</redeploy>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>${licence.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>first</id>
+						<goals>
+							<goal>update-file-header</goal>
+						</goals>
+						<phase>process-sources</phase>
+						<configuration>
+							<licenseName>gpl</licenseName>
+							<licenseResolver>${project.baseUri}/src/license</licenseResolver>
+							<canUpdateCopyright>true</canUpdateCopyright>
+							<canUpdateDescription>true</canUpdateDescription>
+							<roots>
+								<root>src/main/java</root>
+							</roots>
+							<encoding>UTF-8</encoding>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>io.fabric8</groupId>
+										<artifactId>
+											vertx-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.0.5,)
+										</versionRange>
+										<goals>
+											<goal>initialize</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											license-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.7,)
+										</versionRange>
+										<goals>
+											<goal>
+												update-file-header
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+<profiles>
+		<profile>
+			<id>openshift</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>fabric8-maven-plugin</artifactId>
+						<version>3.2.27</version>
+						<executions>
+							<execution>
+								<id>fmp</id>
+								<goals>
+									<goal>resource</goal>
+									<goal>helm</goal>
+									<goal>build</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<inceptionYear>2017</inceptionYear>
+
+	<organization>
+		<name>A. de Giuli</name>
+		<url>http://jeeasy.org</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>Arnaud de Giuli</name>
+			<email>arnaud.degiuli@free.fr</email>
+		</developer>
+	</developers>
+</project>

@@ -1,0 +1,10 @@
+{
+
+"gateway.port": 1234,
+"gateway.url": "localhost",
+"gateway.password": 12345,
+"log.enable": true,
+"mapping": {
+	"28-0416a64415ff": "45"
+	}
+}

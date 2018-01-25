@@ -1,0 +1,77 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.domosnap</groupId>
+	<artifactId>domosnap-diy</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+
+
+	<properties>
+		<licence.plugin.version>1.7</licence.plugin.version>
+		<file.encoding>UTF-8</file.encoding>
+	</properties>
+
+	<modules>
+		<module>w1temp-microservice-prototype</module>
+		<module>raspberry-connector</module>
+		<module>recorder</module>
+		<module>scanner</module>
+		<module>wine-cellar-sensor</module>
+	</modules>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>${licence.plugin.version}</version>
+				<configuration>
+					<licenseName>gpl_v2</licenseName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>bintray-arnauddegiuli-homesnap</id>
+			<name>arnauddegiuli-homesnap</name>
+			<url>https://api.bintray.com/maven/arnauddegiuli/homesnap/HomeSnap/;publish=1</url>
+		</repository>
+	</distributionManagement>
+
+	<inceptionYear>2017</inceptionYear>
+
+	<organization>
+		<name>A. de Giuli</name>
+		<url>http://jeeasy.org</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>Arnaud de Giuli</name>
+			<email>arnaud.degiuli@free.fr</email>
+		</developer>
+	</developers>
+</project>
