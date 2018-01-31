@@ -19,7 +19,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- vert.x properties -->
 		<vertx.version>3.4.2</vertx.version>
-		<vertx.verticle>com.domosnap.microservice.data.event.ConnectorRestMicroservice</vertx.verticle>
+		<vertx.verticle>org.domosnap.diy.winecellarsensor.WineCellarSensor</vertx.verticle>
 		<!-- Maven plugins -->
 		<fabric8-vertx-maven-plugin.version>1.0.5</fabric8-vertx-maven-plugin.version>
 
@@ -71,24 +71,14 @@
 			</exclusions>
 		</dependency>
 
-
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-core</artifactId>
 		</dependency>
 		<dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-infinispan</artifactId>
-    </dependency>
-        <dependency>
-	      <groupId>io.vertx</groupId>
-	      <artifactId>vertx-web</artifactId>
-	    </dependency>
-		<dependency>
 		  <groupId>io.vertx</groupId>
-		  <artifactId>vertx-auth-common</artifactId>
+		  <artifactId>vertx-mail-client</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>

@@ -1,0 +1,9 @@
+{
+	"mail.from":"",
+	"mail.to":"",
+	"mail.hostname":"",
+	"mail.port":"",
+	"mail.tls":"",
+	"mail.user":"",
+	"mail.password":""
+}
