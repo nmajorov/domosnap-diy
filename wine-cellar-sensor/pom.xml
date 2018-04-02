@@ -47,12 +47,12 @@
 		<dependency>
 			<groupId>com.domosnap</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.9-SNAPSHOT</version>
+			<version>0.1.11</version>
 		</dependency>
 		<dependency>
 			<groupId>com.domosnap</groupId>
 			<artifactId>i2c-connector</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.11</version>
 		</dependency>
 		<dependency>
 			<groupId>com.pi4j</groupId>
@@ -182,6 +182,16 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+        <repositories>
+                <repository>
+                        <id>bintray-arnauddegiuli-domosnap</id>
+                        <name>arnauddegiuli-domosnap</name>
+                        <url>https://dl.bintray.com/arnauddegiuli/domosnap/</url>
+                </repository>
+        </repositories>
+
+
 <profiles>
 		<profile>
 			<id>openshift</id>
