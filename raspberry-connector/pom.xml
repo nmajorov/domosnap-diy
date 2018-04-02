@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>com.domosnap</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.5</version>
+			<version>0.1.11</version>
 		</dependency>
 		<dependency>
 			<groupId>com.pi4j</groupId>
@@ -147,6 +147,14 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>bintray-arnauddegiuli-domosnap</id>
+			<name>arnauddegiuli-domosnap</name>
+			<url>https://dl.bintray.com/arnauddegiuli/domosnap/</url>
+		</repository>
+	</repositories>
 
 	<inceptionYear>2016</inceptionYear>
 

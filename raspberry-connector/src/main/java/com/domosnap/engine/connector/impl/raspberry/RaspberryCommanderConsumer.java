@@ -4,7 +4,7 @@ package com.domosnap.engine.connector.impl.raspberry;
  * #%L
  * DomoSnapRaspberryConnector
  * %%
- * Copyright (C) 2016 - 2017 A. de Giuli
+ * Copyright (C) 2016 - 2018 A. de Giuli
  * %%
  * This file is part of HomeSnap done by Arnaud de Giuli (arnaud.degiuli(at)free.fr)
  *     helped by Olivier Driesbach (olivier.driesbach(at)gmail.com).
@@ -47,7 +47,7 @@ import io.reactivex.functions.Consumer;
 
 public class RaspberryCommanderConsumer implements Consumer<Command> {
 
-	protected final Log log = new Log();
+	protected final Log log = new Log(this.getClass().getSimpleName());
     private GpioController gpio;
 	private List<ConnectionListener> connectionListenerList = Collections
 			.synchronizedList(new ArrayList<ConnectionListener>());
@@ -60,7 +60,7 @@ public class RaspberryCommanderConsumer implements Consumer<Command> {
 	@Override
 	public void accept(Command command) {
 		if (command == null) {
-//			log.severe(this.getClass().getSimpleName(), getFormattedLog(Thread.currentThread().getName(), 1, "Command unsupported (null)."));
+//			log.severe(Session.Monitor, "Command unsupported (null).");
 			return;
 		}
 			
