@@ -1,4 +1,4 @@
-package src.main.java.org.domosnap.diy.winecellarsensor;
+package org.domosnap.diy.winecellarsensor;
 
 
 import java.io.PrintWriter;
