@@ -6,7 +6,7 @@ import java.util.Formatter;
  * #%L
  * w1temp-microservice-prototype
  * %%
- * Copyright (C) 2017 A. de Giuli
+ * Copyright (C) 2017 - 2018 A. de Giuli
  * %%
  * This file is part of HomeSnap done by Arnaud de Giuli (arnaud.degiuli(at)free.fr)
  *     helped by Olivier Driesbach (olivier.driesbach(at)gmail.com).
