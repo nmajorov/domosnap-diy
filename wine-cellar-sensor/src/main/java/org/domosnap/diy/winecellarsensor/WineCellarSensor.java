@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
 
-import com.domosnap.engine.connector.impl.i2c.I2CControllerService;
+import com.domosnap.engine.connector.impl.i2c.bme280.BME280ControllerService;
 import com.domosnap.engine.controller.humidity.HumiditySensor;
 import com.domosnap.engine.controller.pressure.PressureSensor;
 import com.domosnap.engine.controller.temperature.TemperatureSensor;
@@ -53,17 +53,19 @@ public class WineCellarSensor extends AbstractVerticle {
 
 	
 //	private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-	
+	private long timerID;
 	
 	@Override
 	public void start() {
 			
 		vertx.executeBlocking(future -> {
 			try {
-				I2CControllerService cs = new I2CControllerService();
-				TemperatureSensor ts = cs.createController(TemperatureSensor.class, new Where("77", "77"));
-				HumiditySensor hs = cs.createController(HumiditySensor.class, new Where("77", "77"));
-				PressureSensor ps = cs.createController(PressureSensor.class, new Where("77", "77"));
+				BME280ControllerService cs = new BME280ControllerService();
+				cs.connect();
+				int adress = 0x77;
+				TemperatureSensor ts = cs.createController(TemperatureSensor.class, new Where("" + adress, "" + adress));
+				HumiditySensor hs = cs.createController(HumiditySensor.class, new Where("" + adress, "" + adress));
+				PressureSensor ps = cs.createController(PressureSensor.class, new Where("" + adress, "" + adress));
 				
 				
 				I2CLcdDisplay led = new I2CLcdDisplay(
@@ -80,17 +82,17 @@ public class WineCellarSensor extends AbstractVerticle {
 				        5,  //     * @param d5
 				        4   //     * @param d4
 				        );
-				while (true) {
-					//"Dimanche 12 Novembre"
-					//"     12:50:55       "        
-					//"  [10.5°] [62.22%]  "
-					//"  Pressure: 2000    "
-			        led.writeln(0, getFormattedDate(new Date()), LCDTextAlignment.ALIGN_CENTER);
-			        led.writeln(1, getFormattedTime(new Date()), LCDTextAlignment.ALIGN_CENTER);
-			        led.writeln(2, getFormattedInfo(ts.getTemperature(), hs.getHumidity()), LCDTextAlignment.ALIGN_CENTER);
-			        led.writeln(3, getFormattedPressure(ps.getPressure()), LCDTextAlignment.ALIGN_CENTER);
-			        Thread.sleep(1000);
-				}
+				
+				timerID = vertx.setPeriodic(1000, id -> {
+						//"Dimanche 12 Novembre"
+						//"     12:50:55       "        
+						//"  [10.5°] [62.22%]  "
+						//"  Pressure: 2000    "
+				        led.writeln(0, getFormattedDate(new Date()), LCDTextAlignment.ALIGN_CENTER);
+				        led.writeln(1, getFormattedTime(new Date()), LCDTextAlignment.ALIGN_CENTER);
+				        led.writeln(2, getFormattedInfo(ts.getTemperature(), hs.getHumidity()), LCDTextAlignment.ALIGN_CENTER);
+				        led.writeln(3, getFormattedPressure(ps.getPressure()), LCDTextAlignment.ALIGN_CENTER);
+				});
 			} catch (Exception | Error e) {
 				
 				String from = config().getString("mail.from");
@@ -141,16 +143,21 @@ public class WineCellarSensor extends AbstractVerticle {
 				}
 				else {
 					System.out.println("No mail send.");
+					e.printStackTrace();
 				}
 				future.complete(e);
 			}
 		}, res -> {
 			System.out.println("An error occurs with WineCellarSensor");
-//			((Exception) res.result()).printStackTrace();
 			vertx.close();
 		});
 	}
 
+	@Override
+	public void stop() throws Exception {
+		super.stop();
+		vertx.cancelTimer(timerID);
+	}
 	
 	private String getFormattedDate(Date date) {
 		return new SimpleDateFormat("EEEE dd MMMMM").format(date);
@@ -161,14 +168,18 @@ public class WineCellarSensor extends AbstractVerticle {
 	}
 	
 	private String getFormattedInfo(DoubleState temp, PercentageState humidity) {
+		if (temp == null || humidity == null)
+			return "No value";
 		StringBuilder sb = new StringBuilder();
 		Formatter f = new Formatter(sb);
-		f.format("[%.1f°C] [%.2f%%]", temp.getDoubleValue(), humidity.getValue());
+		f.format("[%.1f C] [%.2f%%]", temp.getDoubleValue(), humidity.getValue());
 		f.close();
 		return sb.toString();
 	}
 	
 	private String getFormattedPressure(DoubleState press) {
+		if (press == null)
+			return "No value";
 		StringBuilder sb = new StringBuilder();
 		Formatter f = new Formatter(sb);
 		f.format("[%.4fPa]", press.getValue());
