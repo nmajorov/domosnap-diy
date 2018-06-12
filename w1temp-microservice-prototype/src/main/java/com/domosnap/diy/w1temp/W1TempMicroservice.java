@@ -1,7 +1,5 @@
 package com.domosnap.diy.w1temp;
 
-import java.util.Formatter;
-
 /*
  * #%L
  * w1temp-microservice-prototype
@@ -39,8 +37,9 @@ public class W1TempMicroservice extends AbstractVerticle {
 	
 	private Log log = new Log();
 	private OpenWebCommanderConsumer openWebCommanderConsumer;
-	private Thread r;
+	private long timerID;
 	private W1Master w1Master;
+	private static boolean verbose = "true".equals(System.getProperty("w1Temp.debug", "false"));
 	
 	// https://www.maximintegrated.com/en/products/ibutton/software/1wire/1wire_api.cfm
 	// http://hirt.se/blog/?p=493
@@ -48,7 +47,7 @@ public class W1TempMicroservice extends AbstractVerticle {
 	
 	@Override
 	public void start() {
-		log.debug = true;
+		log.debug = config().getBoolean("log.enable");
 		
 		String url = config().getString("gateway.url", "localhost");
 		int port = config().getInteger("gateway.port", 1234);
@@ -58,52 +57,42 @@ public class W1TempMicroservice extends AbstractVerticle {
 		openWebCommanderConsumer.connect();
 		w1Master = new W1Master();
 
-		r = new Thread(new Runnable() {
+		timerID = vertx.setPeriodic(300000, id -> { // all 5 min
 			
-			@Override
-			public void run() {
+			try {
+				if (verbose) System.out.println(w1Master);
 
-				
-				while (true) {
-					try {
-	
-				        System.out.println(w1Master);
-		
-				        for (TemperatureSensor device : w1Master.getDevices(TemperatureSensor.class)) {
-				            System.out.printf("%-20s %3.1f°C %3.1f°F\n", device.getName(), device.getTemperature(),
-				                    device.getTemperature(TemperatureScale.FARENHEIT));
-				            String where = config().getJsonObject("mapping").getString(device.getName().replaceAll("\n", ""));
-				            double T = device.getTemperature(TemperatureScale.CELSIUS);
-				            System.out.println("[" + device.getName().replaceAll("\n", "") + "]");
-				            Formatter f = new Formatter();
-				            String command = f.format("*#4*%s*0*%04.0f##", where,T*10).toString();
-				            f.close();
-				            System.out.println(command);
-				            openWebCommanderConsumer.accept(command);
-				            command = "*4*202*" + where + "##";
-				            System.out.println(command);
-				            openWebCommanderConsumer.accept(command);
-				        }
-				
-				        Thread.sleep(300000); // all 5 min
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-					}
-				}				
+		        for (TemperatureSensor device : w1Master.getDevices(TemperatureSensor.class)) {
+		        	
+		            log.finest(W1TempMicroservice.class.getSimpleName(), 
+		            		String.format("%-20s %3.1f°C %3.1f°F\n", device.getName(), device.getTemperature(TemperatureScale.CELSIUS),
+		                    device.getTemperature(TemperatureScale.FARENHEIT))
+		            );
+		            String where = config().getJsonObject("mapping").getString(device.getName().replaceAll("\n", ""));
+		            log.finest(W1TempMicroservice.class.getSimpleName(),"[".concat(device.getName().replaceAll("\n", "")).concat("]"));
+		            String command = String.format("*#4*%s*0*%04.0f##", where, device.getTemperature(TemperatureScale.CELSIUS)*10);
+		            log.finest(W1TempMicroservice.class.getSimpleName(),command);
+		            openWebCommanderConsumer.accept(command);
+		            command = "*4*202*" + where + "##";
+		            log.finest(W1TempMicroservice.class.getSimpleName(),command);
+		            openWebCommanderConsumer.accept(command);
+
+		        }
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
-			
-		});
-			
-		r.start();
+					
+			});
 		System.out.println("W1Temp Started");
 	}
 
 	@Override
 	public void stop() throws Exception {
 		super.stop();
-		r.interrupt();
+		vertx.cancelTimer(timerID);
 		w1Master = null;
 		openWebCommanderConsumer.disconnect();
+		System.out.println("W1Temp Stopped");
 	}
 
 //	

@@ -1,7 +1,7 @@
 {
 
 "gateway.port": 1234,
-"gateway.url": "localhost",
+"gateway.url": "192.168.1.35",
 "gateway.password": 12345,
 "log.enable": true,
 "mapping": {

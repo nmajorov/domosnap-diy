@@ -51,8 +51,6 @@ import io.vertx.ext.mail.StartTLSOptions;
 
 public class WineCellarSensor extends AbstractVerticle {
 
-	
-//	private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	private long timerID;
 	
 	@Override
