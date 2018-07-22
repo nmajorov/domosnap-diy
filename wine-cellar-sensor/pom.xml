@@ -182,6 +182,16 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+        <repositories>
+                <repository>
+                        <id>bintray-arnauddegiuli-domosnap</id>
+                        <name>arnauddegiuli-domosnap</name>
+                        <url>https://dl.bintray.com/arnauddegiuli/domosnap/</url>
+                </repository>
+        </repositories>
+
+
 <profiles>
 		<profile>
 			<id>openshift</id>
