@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.domosnap.engine.Log;
+import com.domosnap.engine.Log.Session;
 import com.domosnap.engine.connector.ControllerService;
 import com.domosnap.engine.connector.core.Command;
 import com.domosnap.engine.connector.core.ConnectionListener;
@@ -48,7 +49,7 @@ import io.reactivex.processors.PublishProcessor;
 
 public class RaspberryControllerService implements ControllerService {
 
-	private Log log = new Log();
+	private Log log = new Log(this.getClass().getSimpleName());
 
 	private RaspberryMonitorPublisher monitor;
 	private Flowable<Command> monitorStream;
@@ -98,9 +99,9 @@ public class RaspberryControllerService implements ControllerService {
 					controller.setWhere(where);
 					map.put(where, controller);
 				} catch (InstantiationException e) {
-					log.severe(this.getClass().getSimpleName(), "Error when instanciate the controller [" + where + "]. " + e.getMessage());
+					log.severe(Session.Command, "Error when instanciate the controller [" + where + "]. " + e.getMessage());
 				} catch (IllegalAccessException e) {
-					log.severe(this.getClass().getSimpleName(), "Error when instanciate the controller [" + where + "]. " + e.getMessage());
+					log.severe(Session.Command, "Error when instanciate the controller [" + where + "]. " + e.getMessage());
 				}
 			}
 			return controller;
@@ -111,7 +112,7 @@ public class RaspberryControllerService implements ControllerService {
 		if (monitorStream == null) {
 			monitor = new RaspberryMonitorPublisher();
 			monitorStream = FlowableProcessor.create(this.monitor, BackpressureStrategy.DROP).share();
-			log.finest(this.getClass().getSimpleName(), monitor.getFormattedLog(null, 0, "Monitor created."));
+			log.finest(Session.Monitor, "Monitor created.");
 		}
 
 		return monitorStream;
@@ -130,7 +131,7 @@ public class RaspberryControllerService implements ControllerService {
 				}
 			}).subscribe(this.commander);	
 			
-//			log.finest(this.getClass().getSimpleName(), commander.getFormattedLog(null, 0, "Commander created."));
+//			log.finest(Session.Command, "Commander created.");
 		}
 		return commanderStream;
 	}

@@ -13,6 +13,7 @@
 		<module>recorder</module>
 		<module>scanner</module>
 		<module>wine-cellar-sensor</module>
+		<module>alexa-domosnap-skill</module>
 	</modules>
 
 	<distributionManagement>

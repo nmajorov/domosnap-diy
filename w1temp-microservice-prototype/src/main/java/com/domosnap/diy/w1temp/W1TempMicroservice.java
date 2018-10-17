@@ -25,7 +25,8 @@ package com.domosnap.diy.w1temp;
  */
 
 import com.domosnap.engine.Log;
-import com.domosnap.engine.connector.impl.openwebnet.OpenWebCommanderConsumer;
+import com.domosnap.engine.Log.Session;
+import com.domosnap.engine.adapter.impl.openwebnet.OpenWebCommanderConsumer;
 import com.pi4j.component.temperature.TemperatureSensor;
 import com.pi4j.io.w1.W1Master;
 import com.pi4j.temperature.TemperatureScale;
@@ -35,7 +36,7 @@ import io.vertx.core.AbstractVerticle;
 public class W1TempMicroservice extends AbstractVerticle {
 
 	
-	private Log log = new Log();
+	private Log log = new Log(W1TempMicroservice.class.getSimpleName());
 	private OpenWebCommanderConsumer openWebCommanderConsumer;
 	private long timerID;
 	private W1Master w1Master;
@@ -64,17 +65,17 @@ public class W1TempMicroservice extends AbstractVerticle {
 
 		        for (TemperatureSensor device : w1Master.getDevices(TemperatureSensor.class)) {
 		        	
-		            log.finest(W1TempMicroservice.class.getSimpleName(), 
+		            log.finest(Session.Device, 
 		            		String.format("%-20s %3.1f°C %3.1f°F\n", device.getName(), device.getTemperature(TemperatureScale.CELSIUS),
 		                    device.getTemperature(TemperatureScale.FARENHEIT))
 		            );
 		            String where = config().getJsonObject("mapping").getString(device.getName().replaceAll("\n", ""));
-		            log.finest(W1TempMicroservice.class.getSimpleName(),"[".concat(device.getName().replaceAll("\n", "")).concat("]"));
+		            log.finest(Session.Device,"[".concat(device.getName().replaceAll("\n", "")).concat("]"));
 		            String command = String.format("*#4*%s*0*%04.0f##", where, device.getTemperature(TemperatureScale.CELSIUS)*10);
-		            log.finest(W1TempMicroservice.class.getSimpleName(),command);
+		            log.finest(Session.Device,command);
 		            openWebCommanderConsumer.accept(command);
 		            command = "*4*202*" + where + "##";
-		            log.finest(W1TempMicroservice.class.getSimpleName(),command);
+		            log.finest(Session.Device,command);
 		            openWebCommanderConsumer.accept(command);
 
 		        }

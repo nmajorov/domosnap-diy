@@ -31,14 +31,20 @@ import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.domosnap.engine.connector.impl.i2c.bme280.BME280ControllerService;
+import org.apache.kafka.clients.producer.ProducerConfig;
+
+import com.domosnap.engine.connector.impl.i2c.bme280.BME280ControllerAdapter;
 import com.domosnap.engine.controller.humidity.HumiditySensor;
 import com.domosnap.engine.controller.pressure.PressureSensor;
 import com.domosnap.engine.controller.temperature.TemperatureSensor;
 import com.domosnap.engine.controller.what.impl.DoubleState;
 import com.domosnap.engine.controller.what.impl.PercentageState;
 import com.domosnap.engine.controller.where.Where;
+import com.domosnap.engine.event.EventFactory;
+import com.domosnap.engine.event.EventToKafkaConsumer;
 import com.pi4j.component.lcd.LCDTextAlignment;
 import com.pi4j.component.lcd.impl.I2CLcdDisplay;
 
@@ -58,12 +64,30 @@ public class WineCellarSensor extends AbstractVerticle {
 			
 		vertx.executeBlocking(future -> {
 			try {
-				BME280ControllerService cs = new BME280ControllerService();
+				String kafkaIp = config().getString("kafka.ip");
+				
+				if (kafkaIp != null) {
+					Map<String, Object> props = new HashMap<String, Object>();
+					props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "PLAINTEXT://" + kafkaIp + ":9092");
+					props.put(ProducerConfig.ACKS_CONFIG, "all");
+					props.put(ProducerConfig.RETRIES_CONFIG, "0");
+					props.put(ProducerConfig.BATCH_SIZE_CONFIG, "100");
+					props.put(ProducerConfig.LINGER_MS_CONFIG, "1");
+					props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, "33554432");
+					props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+							"org.apache.kafka.common.serialization.StringSerializer");
+					props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+							"org.apache.kafka.common.serialization.StringSerializer");
+					
+					EventFactory.addConsumer(new EventToKafkaConsumer(props));
+				}
+				
+				BME280ControllerAdapter cs = new BME280ControllerAdapter();
 				cs.connect();
 				int adress = 0x77;
-				TemperatureSensor ts = cs.createController(TemperatureSensor.class, new Where("" + adress, "" + adress));
-				HumiditySensor hs = cs.createController(HumiditySensor.class, new Where("" + adress, "" + adress));
-				PressureSensor ps = cs.createController(PressureSensor.class, new Where("" + adress, "" + adress));
+				TemperatureSensor ts = cs.createController(TemperatureSensor.class, new Where("" + adress));
+				HumiditySensor hs = cs.createController(HumiditySensor.class, new Where("" + adress));
+				PressureSensor ps = cs.createController(PressureSensor.class, new Where("" + adress));
 				
 				
 				I2CLcdDisplay led = new I2CLcdDisplay(

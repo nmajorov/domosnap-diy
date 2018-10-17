@@ -47,13 +47,19 @@
 		<dependency>
 			<groupId>com.domosnap</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.12</version>
+			<version>0.1.13-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.domosnap</groupId>
 			<artifactId>i2c-connector</artifactId>
-			<version>0.1.12</version>
+			<version>0.1.13-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.domosnap</groupId>
+			<artifactId>EventToKafkaConsumer</artifactId>
+			<version>0.1.13-SNAPSHOT</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.pi4j</groupId>
 			<artifactId>pi4j-device</artifactId>

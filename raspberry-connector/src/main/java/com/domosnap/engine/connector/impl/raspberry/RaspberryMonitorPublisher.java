@@ -33,6 +33,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.domosnap.engine.Log;
+import com.domosnap.engine.Log.Session;
 import com.domosnap.engine.connector.core.Command;
 import com.domosnap.engine.connector.core.Command.Type;
 import com.domosnap.engine.connector.core.ConnectionListener;
@@ -56,7 +57,7 @@ public class RaspberryMonitorPublisher implements FlowableOnSubscribe<Command> {
 	private List<FlowableEmitter<Command>> suscriberList = Collections.synchronizedList(new ArrayList<FlowableEmitter<Command>>());
 	private GpioPinDigitalInput led;
     private GpioController gpio;
-	protected final Log log = new Log();
+	protected final Log log = new Log(this.getClass().getSimpleName());
 
 	public RaspberryMonitorPublisher() {
 		connect();
@@ -76,8 +77,8 @@ public class RaspberryMonitorPublisher implements FlowableOnSubscribe<Command> {
 				suscriber.onNext(command);
 			}
 		} catch (Exception e) {
-			log.severe(this.getClass().getSimpleName(), getFormattedLog(event, 1, "Exception occurs with message ["
-					+ String.valueOf(event) + "]. Message dropped. " + e.getMessage()));
+			log.severe(Session.Command, "Exception occurs with message ["
+					+ String.valueOf(event) + "]. Message dropped. " + e.getMessage());
 		}
 	}
 

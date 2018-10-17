@@ -3,17 +3,22 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.domosnap</groupId>
-	<artifactId>raspberry-connector</artifactId>
+	<artifactId>alexa-skill</artifactId>
 	<packaging>jar</packaging>
-	<name>DomoSnapRaspberryConnector</name>
-	<description>Raspberry connector for engine</description>
+	<name>AlexaDomosnapSkill</name>
+	<description>Domosnap skill for Alexa</description>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<!-- Build Configuration -->
 	<properties>
 		<licence.plugin.version>1.7</licence.plugin.version>
 		<file.encoding>UTF-8</file.encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
+
 	<!-- Dependecies Management -->
 	<dependencies>
 		<dependency>
@@ -24,69 +29,17 @@
 		<dependency>
 			<groupId>com.domosnap</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.11</version>
+			<version>0.1.12</version>
 		</dependency>
 		<dependency>
-			<groupId>com.pi4j</groupId>
-			<artifactId>pi4j-core</artifactId>
-			<version>1.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.pi4j</groupId>
-					<artifactId>pi4j-native</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-
-		<dependency>
-			<groupId>io.reactivex.rxjava2</groupId>
-			<artifactId>rxjava</artifactId>
-			<version>2.1.0</version>
-		</dependency>
+  <groupId>com.amazon.alexa</groupId>
+  <artifactId>ask-sdk</artifactId>
+  <version>2.3.2</version>
+</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<version>3.2.0</version>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<extensions>true</extensions>
-				<configuration>
-					<instructions>
-						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
-						<Bundle-Name>DomoSnapRaspberry</Bundle-Name>
-						<Bundle-Description></Bundle-Description>
-						<Bundle-Vendor>ADG Software</Bundle-Vendor>
-						<Bundle-Version>${project.version}</Bundle-Version>
-						<Export-Package>
-
-						</Export-Package>
-						<Import-Package>
-							com.domosnap.engine.connector.core
-						</Import-Package>
-					</instructions>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>license-maven-plugin</artifactId>
@@ -106,9 +59,6 @@
 							<roots>
 								<root>src/main/java</root>
 							</roots>
-							<excludes>
-								<exclude>org/json/**</exclude>
-							</excludes>
 							<encoding>UTF-8</encoding>
 						</configuration>
 					</execution>
@@ -118,6 +68,8 @@
 
 		<pluginManagement>
 			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -127,9 +79,15 @@
 							<pluginExecutions>
 								<pluginExecution>
 									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>license-maven-plugin</artifactId>
-										<versionRange>[1.5,)</versionRange>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											license-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.7,)
+										</versionRange>
 										<goals>
 											<goal>
 												update-file-header
@@ -147,20 +105,11 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>bintray-arnauddegiuli-domosnap</id>
-			<name>arnauddegiuli-domosnap</name>
-			<url>https://dl.bintray.com/arnauddegiuli/domosnap/</url>
-		</repository>
-	</repositories>
-
-	<inceptionYear>2016</inceptionYear>
+	<inceptionYear>2018</inceptionYear>
 
 	<organization>
 		<name>A. de Giuli</name>
-		<url>http://jeeasy.org</url>
+		<url>http://domosnap.com</url>
 	</organization>
 
 	<developers>

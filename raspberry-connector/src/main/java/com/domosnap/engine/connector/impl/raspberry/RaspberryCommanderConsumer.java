@@ -47,7 +47,7 @@ import io.reactivex.functions.Consumer;
 
 public class RaspberryCommanderConsumer implements Consumer<Command> {
 
-	protected final Log log = new Log();
+	protected final Log log = new Log(this.getClass().getSimpleName());
     private GpioController gpio;
 	private List<ConnectionListener> connectionListenerList = Collections
 			.synchronizedList(new ArrayList<ConnectionListener>());
@@ -60,7 +60,7 @@ public class RaspberryCommanderConsumer implements Consumer<Command> {
 	@Override
 	public void accept(Command command) {
 		if (command == null) {
-//			log.severe(this.getClass().getSimpleName(), getFormattedLog(Thread.currentThread().getName(), 1, "Command unsupported (null)."));
+//			log.severe(Session.Monitor, "Command unsupported (null).");
 			return;
 		}
 			
