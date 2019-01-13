@@ -1,5 +1,10 @@
 package com.domosnap.diy.w1temp;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.kafka.clients.producer.ProducerConfig;
+
 /*
  * #%L
  * w1temp-microservice-prototype
@@ -26,7 +31,16 @@ package com.domosnap.diy.w1temp;
 
 import com.domosnap.engine.Log;
 import com.domosnap.engine.Log.Session;
+import com.domosnap.engine.adapter.core.Command;
+import com.domosnap.engine.adapter.core.Command.Type;
 import com.domosnap.engine.adapter.impl.openwebnet.OpenWebCommanderConsumer;
+import com.domosnap.engine.controller.temperature.TemperatureSensorStateName;
+import com.domosnap.engine.controller.what.What;
+import com.domosnap.engine.controller.what.impl.DoubleState;
+import com.domosnap.engine.controller.where.Where;
+import com.domosnap.engine.controller.who.Who;
+import com.domosnap.engine.event.EventFactory;
+import com.domosnap.engine.event.EventToKafkaConsumer;
 import com.pi4j.component.temperature.TemperatureSensor;
 import com.pi4j.io.w1.W1Master;
 import com.pi4j.temperature.TemperatureScale;
@@ -54,6 +68,24 @@ public class W1TempMicroservice extends AbstractVerticle {
 		int port = config().getInteger("gateway.port", 1234);
 		int password = config().getInteger("gateway.password", 12345);
 		
+		String kafkaIp = config().getString("kafka.ip");
+		if (kafkaIp != null) {
+			Map<String, Object> props = new HashMap<String, Object>();
+			props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "PLAINTEXT://" + kafkaIp + ":9092");
+			props.put(ProducerConfig.ACKS_CONFIG, "all");
+			props.put(ProducerConfig.RETRIES_CONFIG, "0");
+			props.put(ProducerConfig.BATCH_SIZE_CONFIG, "100");
+			props.put(ProducerConfig.LINGER_MS_CONFIG, "1");
+			props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, "33554432");
+			props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+					"org.apache.kafka.common.serialization.StringSerializer");
+			props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+					"org.apache.kafka.common.serialization.StringSerializer");
+			
+			EventFactory.addConsumer(new EventToKafkaConsumer(props));
+		}
+		
+		
 		openWebCommanderConsumer = new OpenWebCommanderConsumer(url, port, password);
 		openWebCommanderConsumer.connect();
 		w1Master = new W1Master();
@@ -77,6 +109,10 @@ public class W1TempMicroservice extends AbstractVerticle {
 		            command = "*4*202*" + where + "##";
 		            log.finest(Session.Device,command);
 		            openWebCommanderConsumer.accept(command);
+		            
+		            // Temp
+		            DoubleState whatState = new DoubleState(device.getTemperature(TemperatureScale.CELSIUS));
+		            EventFactory.SendEvent(Session.Command, new Command(Who.TEMPERATURE_SENSOR, new What(TemperatureSensorStateName.VALUE.name(), whatState), new Where("45"), Type.WRITE, null));
 
 		        }
 			} catch (Exception e) {

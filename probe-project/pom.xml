@@ -8,18 +8,19 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
     
-    <groupId>com.domosnap.dyi.w1temp</groupId>
-    <artifactId>w1temp-microservice-prototype</artifactId>
+    <groupId>com.domosnap.dyi.probe</groupId>
+    <artifactId>probe-project</artifactId>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <!-- vert.x properties -->
         <vertx.version>3.4.0</vertx.version>
-        <vertx.verticle>com.domosnap.diy.w1temp.W1TempMicroservice</vertx.verticle>
+        <vertx.verticle>com.domosnap.diy.probe.ProbeMicroservice</vertx.verticle>
         <!-- Maven plugins -->
         <fabric8-vertx-maven-plugin.version>1.0.5</fabric8-vertx-maven-plugin.version>
         <licence.plugin.version>1.7</licence.plugin.version>
 		<file.encoding>UTF-8</file.encoding>
+		<domosnap.version>0.1.14-SNAPSHOT</domosnap.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -42,36 +43,32 @@
 	      <artifactId>vertx-web</artifactId>
 	    </dependency>
 	    <dependency>
-			<groupId>com.domosnap</groupId>
+			<groupId>com.domosnap.engine</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.13-SNAPSHOT</version>
+			<version>${domosnap.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.domosnap</groupId>
-			<artifactId>EventToKafkaConsumer</artifactId>
-			<version>0.1.13-SNAPSHOT</version>
+			<groupId>com.domosnap.engine.adapter</groupId>
+			<artifactId>onewire</artifactId>
+			<version>${domosnap.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.domosnap.engine.adapter</groupId>
+			<artifactId>i2c</artifactId>
+			<version>${domosnap.version}</version>
+		</dependency>
+<!-- 		<dependency>
 			<groupId>io.reactivex.rxjava2</groupId>
 			<artifactId>rxjava</artifactId>
 			<version>2.1.0</version>
 		</dependency>
-
-		<dependency>
+ -->
+<!-- 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.pi4j</groupId>
-			<artifactId>pi4j-core</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.pi4j</groupId>
-			<artifactId>pi4j-device</artifactId>
-			<version>1.1</version>
-		</dependency>
+ -->
     </dependencies>
     <build>
         <plugins>

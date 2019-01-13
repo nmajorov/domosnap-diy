@@ -22,7 +22,7 @@
 		<vertx.verticle>org.domosnap.diy.winecellarsensor.WineCellarSensor</vertx.verticle>
 		<!-- Maven plugins -->
 		<fabric8-vertx-maven-plugin.version>1.0.5</fabric8-vertx-maven-plugin.version>
-
+		<domosnap.version>0.1.14-SNAPSHOT</domosnap.version>
 		<pi4j.version>1.1</pi4j.version>
 	</properties>
 
@@ -45,19 +45,19 @@
 			<version>4.11</version>
 		</dependency>
 		<dependency>
-			<groupId>com.domosnap</groupId>
+			<groupId>com.domosnap.engine</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.13-SNAPSHOT</version>
+			<version>${domosnap.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.domosnap</groupId>
-			<artifactId>i2c-connector</artifactId>
-			<version>0.1.13-SNAPSHOT</version>
+			<groupId>com.domosnap.engine.adapter</groupId>
+			<artifactId>i2c</artifactId>
+			<version>${domosnap.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.domosnap</groupId>
-			<artifactId>EventToKafkaConsumer</artifactId>
-			<version>0.1.13-SNAPSHOT</version>
+			<groupId>com.domosnap.engine.event</groupId>
+			<artifactId>eventToKafkaConsumer</artifactId>
+			<version>${domosnap.version}</version>
 		</dependency>
 		
 		<dependency>

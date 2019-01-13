@@ -29,9 +29,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.domosnap.engine.connector.core.Command;
-import com.domosnap.engine.connector.core.UnknownControllerListener;
-import com.domosnap.engine.connector.impl.openwebnet.OpenWebNetControllerService;
+import com.domosnap.engine.adapter.core.Command;
+import com.domosnap.engine.adapter.core.UnknownControllerListener;
+import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerAdapter;
 import com.domosnap.engine.controller.heating.HeatingZoneStateName;
 import com.domosnap.engine.controller.what.What;
 import com.domosnap.engine.controller.who.Who;
@@ -45,21 +45,22 @@ public class RecorderServiceImpl implements RecorderService {
 	
 	public RecorderServiceImpl(String host, int port, int password) {
 		init();
-		OpenWebNetControllerService monitor = new OpenWebNetControllerService(host, port, password);
+		OpenWebNetControllerAdapter monitor = new OpenWebNetControllerAdapter(host, port, password);
+		monitor.connect();
 		monitor.addUnknowControllerListener(new UnknownControllerListener() {
 			@Override
 			public void foundUnknownController(Command command) {
 				
-				What what = command.getWhat();
-				if(Who.HEATING_ADJUSTMENT.equals(command.getWho()) & HeatingZoneStateName.measure_temperature.name().equals(what.getName())) {
-					
-					String whereStr = command.getWhere() != null ? command.getWhere().getTo() : "null";
-					String whatStr = what == null ? "null": what.getName() == null ? "null" : what.getName();
-					String valueStr = what == null ? "null": what.getValue() == null ? "null" : what.getValue().toString();
-					
-					System.out.println(MessageFormat.format("Who [{0}] : Where [{1}] : what [{2}] : value [{3}]\n", command.getWho(), whereStr, whatStr, valueStr));
-					con.writeTemperatureData(whereStr, valueStr);
-					
+				for(What what : command.getWhatList()) {
+					if(Who.HEATING_ADJUSTMENT.equals(command.getWho()) & HeatingZoneStateName.measure_temperature.name().equals(what.getName())) {
+						
+						String whereStr = command.getWhere() != null ? command.getWhere().getPath() : "null";
+						String whatStr = what == null ? "null": what.getName() == null ? "null" : what.getName();
+						String valueStr = what == null ? "null": what.getValue() == null ? "null" : what.getValue().toString();
+						
+						System.out.println(MessageFormat.format("Who [{0}] : Where [{1}] : what [{2}] : value [{3}]\n", command.getWho(), whereStr, whatStr, valueStr));
+						con.writeTemperatureData(whereStr, valueStr);
+					}
 				}
 			}
 		});

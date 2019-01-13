@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: DomoSnapRapsberry
-Bundle-SymbolicName: com.domosnap.engine
-Bundle-Version: 0.1
-Export-Package: 
-Import-Package: com.domosnap.engine.connector.core
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
