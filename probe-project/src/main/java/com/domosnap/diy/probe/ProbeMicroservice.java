@@ -25,12 +25,8 @@ package com.domosnap.diy.probe;
  */
 
 import com.domosnap.engine.Log;
-import com.domosnap.engine.adapter.core.ScanListener;
 import com.domosnap.engine.adapter.i2c.I2CControllerAdapter;
 import com.domosnap.engine.adapter.onewire.OneWireControllerAdapter;
-import com.domosnap.engine.controller.Controller;
-import com.domosnap.engine.controller.where.Where;
-import com.domosnap.engine.controller.who.Who;
 import com.domosnap.engine.event.EventFactory;
 import com.domosnap.engine.event.EventToConsoleConsumer;
 
@@ -54,48 +50,11 @@ public class ProbeMicroservice extends AbstractVerticle {
 
 		OneWireControllerAdapter owa = new OneWireControllerAdapter();
 		owa.connect();
-		owa.scan(new ScanListener() {
-			
-			@Override
-			public void scanFinished() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void progess(int percent) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void foundController(Who who, Where where, Controller controller) {
-				// TODO Auto-generated method stub
-			}
-		});
+		owa.scan(new ScanListerImpl("OneWire"));
 		
 		I2CControllerAdapter i2c = new I2CControllerAdapter();
 		i2c.connect();
-		i2c.scan(new ScanListener() {
-			
-			@Override
-			public void scanFinished() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void progess(int percent) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void foundController(Who who, Where where, Controller controller) {
-				// TODO Auto-generated method stub
-			}
-		});
-		
+		i2c.scan(new ScanListerImpl("I2C"));
 		
 		System.out.println("Probe Service Started");
 	}
