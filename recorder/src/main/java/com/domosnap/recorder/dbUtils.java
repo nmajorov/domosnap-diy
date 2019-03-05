@@ -4,7 +4,7 @@ package com.domosnap.recorder;
  * #%L
  * DomoSnapRecorder
  * %%
- * Copyright (C) 2017 - 2018 A. de Giuli
+ * Copyright (C) 2017 - 2019 A. de Giuli
  * %%
  * This file is part of HomeSnap done by A. de Giuli (arnaud.degiuli(at)free.fr).
  * 
