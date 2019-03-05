@@ -14,6 +14,7 @@
 		<module>wine-cellar-sensor</module>
 		<module>alexa-domosnap-skill</module>
 		<module>probe-project</module>
+		<module>uv-scanner</module>
 	</modules>
 
 	<distributionManagement>
