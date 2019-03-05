@@ -8,7 +8,7 @@ import java.io.StringWriter;
  * #%L
  * DomoSnapWineCellar
  * %%
- * Copyright (C) 2017 - 2018 A. de Giuli
+ * Copyright (C) 2017 - 2019 A. de Giuli
  * %%
  * This file is part of HomeSnap done by Arnaud de Giuli (arnaud.degiuli(at)free.fr)
  *     helped by Olivier Driesbach (olivier.driesbach(at)gmail.com).
@@ -36,7 +36,7 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 
-import com.domosnap.engine.connector.impl.i2c.bme280.BME280ControllerAdapter;
+import com.domosnap.engine.adapter.i2c.I2CControllerAdapter;
 import com.domosnap.engine.controller.humidity.HumiditySensor;
 import com.domosnap.engine.controller.pressure.PressureSensor;
 import com.domosnap.engine.controller.temperature.TemperatureSensor;
@@ -44,7 +44,7 @@ import com.domosnap.engine.controller.what.impl.DoubleState;
 import com.domosnap.engine.controller.what.impl.PercentageState;
 import com.domosnap.engine.controller.where.Where;
 import com.domosnap.engine.event.EventFactory;
-import com.domosnap.engine.event.EventToKafkaConsumer;
+import com.domosnap.engine.event.eventToKafkaConsumer.EventToKafkaConsumer;
 import com.pi4j.component.lcd.LCDTextAlignment;
 import com.pi4j.component.lcd.impl.I2CLcdDisplay;
 
@@ -82,12 +82,12 @@ public class WineCellarSensor extends AbstractVerticle {
 					EventFactory.addConsumer(new EventToKafkaConsumer(props));
 				}
 				
-				BME280ControllerAdapter cs = new BME280ControllerAdapter();
+				I2CControllerAdapter cs = new I2CControllerAdapter();
 				cs.connect();
 				int adress = 0x77;
-				TemperatureSensor ts = cs.createController(TemperatureSensor.class, new Where("" + adress));
-				HumiditySensor hs = cs.createController(HumiditySensor.class, new Where("" + adress));
-				PressureSensor ps = cs.createController(PressureSensor.class, new Where("" + adress));
+				TemperatureSensor ts = cs.createController(TemperatureSensor.class, new Where("bme/" + adress));
+				HumiditySensor hs = cs.createController(HumiditySensor.class, new Where("bme/" + adress));
+				PressureSensor ps = cs.createController(PressureSensor.class, new Where("bme/" + adress));
 				
 				
 				I2CLcdDisplay led = new I2CLcdDisplay(
