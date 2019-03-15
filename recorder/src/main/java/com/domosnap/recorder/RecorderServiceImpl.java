@@ -32,9 +32,9 @@ import java.util.List;
 import com.domosnap.engine.adapter.core.Command;
 import com.domosnap.engine.adapter.core.UnknownControllerListener;
 import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerAdapter;
+import com.domosnap.engine.controller.heating.HeatingZone;
 import com.domosnap.engine.controller.heating.HeatingZoneStateName;
 import com.domosnap.engine.controller.what.What;
-import com.domosnap.engine.controller.who.Who;
 
 public class RecorderServiceImpl implements RecorderService {
 
@@ -52,7 +52,7 @@ public class RecorderServiceImpl implements RecorderService {
 			public void foundUnknownController(Command command) {
 				
 				for(What what : command.getWhatList()) {
-					if(Who.HEATING_ADJUSTMENT.equals(command.getWho()) & HeatingZoneStateName.measure_temperature.name().equals(what.getName())) {
+					if(HeatingZone.class.equals(command.getWho()) & HeatingZoneStateName.measure_temperature.name().equals(what.getName())) {
 						
 						String whereStr = command.getWhere() != null ? command.getWhere().getPath() : "null";
 						String whatStr = what == null ? "null": what.getName() == null ? "null" : what.getName();
