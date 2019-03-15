@@ -26,6 +26,7 @@ package com.domosnap.diy.probe;
 
 import com.domosnap.engine.Log;
 import com.domosnap.engine.adapter.i2c.I2CControllerAdapter;
+import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerAdapter;
 import com.domosnap.engine.adapter.onewire.OneWireControllerAdapter;
 import com.domosnap.engine.event.EventFactory;
 import com.domosnap.engine.event.EventToConsoleConsumer;
@@ -37,17 +38,14 @@ public class ProbeMicroservice extends AbstractVerticle {
 	@Override
 	public void start() {
 
-		Log.debug = false;
-		Log.error = false;
-		Log.fine = false;
-		Log.finest = false;
-		Log.info = false;
-		Log.logCommand = false;
-		Log.logMonitor = false;
-		Log.warning = false;
+		Log.getConfig().put("all", "false");
 		
 		EventFactory.addConsumer(new EventToConsoleConsumer());
 
+		OpenWebNetControllerAdapter own = new OpenWebNetControllerAdapter("scs://12345@192.168.1.35:20000");
+		own.connect();
+		own.scan(new ScanListerImpl("scs"));
+		
 		OneWireControllerAdapter owa = new OneWireControllerAdapter();
 		owa.connect();
 		owa.scan(new ScanListerImpl("OneWire"));
