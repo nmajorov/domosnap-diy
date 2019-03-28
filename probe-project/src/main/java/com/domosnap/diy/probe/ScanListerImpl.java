@@ -30,7 +30,6 @@ import com.domosnap.engine.Log;
 import com.domosnap.engine.Log.Session;
 import com.domosnap.engine.adapter.core.ScanListener;
 import com.domosnap.engine.controller.Controller;
-import com.domosnap.engine.controller.where.Where;
 
 public class ScanListerImpl implements ScanListener {
 
@@ -42,8 +41,8 @@ public class ScanListerImpl implements ScanListener {
 	}
 	
 	@Override
-	public void foundController(Class<? extends Controller> who, Where where, Controller controller) {
-		log.fine(Session.Device, MessageFormat.format("Device who[{0}], Where[{1}] found!", who.getName(), where.getUri()));
+	public void foundController(Controller controller) {
+		log.fine(Session.Device, MessageFormat.format("Device who[{0}], Where[{1}] found!", controller.getClass().getName(), controller.getWhere().getUri()));
 	}
 
 	@Override
