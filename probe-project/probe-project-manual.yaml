@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: probe-project
+spec:
+  containers:
+  - image: adegiuli/probe-project-arm32v6
+    name: probe-project
+    livenessProbe:
+      httpGet:
+      path: /health
+      port: 8080
+      initialDelaySeconds: 15
