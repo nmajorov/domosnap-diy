@@ -31,7 +31,7 @@ import java.net.Socket;
 
 import com.domosnap.engine.Log;
 import com.domosnap.engine.Log.Session;
-import com.domosnap.engine.connector.impl.openwebnet.connector.OpenWebNetConstant;
+import com.domosnap.engine.adapter.impl.openwebnet.connector.OpenWebNetConstant;
 
 public class PortScanner {
 

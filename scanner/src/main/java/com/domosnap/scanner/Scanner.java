@@ -24,10 +24,11 @@ package com.domosnap.scanner;
  */
 
 import java.text.MessageFormat;
+import java.util.List;
 
-import com.domosnap.engine.connector.core.Command;
-import com.domosnap.engine.connector.core.UnknownControllerListener;
-import com.domosnap.engine.connector.impl.openwebnet.OpenWebNetControllerService;
+import com.domosnap.engine.adapter.core.Command;
+import com.domosnap.engine.adapter.core.UnknownControllerListener;
+import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerAdapter;
 import com.domosnap.engine.controller.what.What;
 
 
@@ -36,17 +37,18 @@ public class Scanner {
 	
 	private Scanner(String host, int port, int password) {
 		
-		OpenWebNetControllerService o = new OpenWebNetControllerService(host, port, password);
+		OpenWebNetControllerAdapter o = new OpenWebNetControllerAdapter(host, port, password);
 		o.addUnknowControllerListener(new UnknownControllerListener() {
 
 			@Override
 			public void foundUnknownController(Command command) {
-				What what = command.getWhat();
-				String whereStr = command.getWhere()!= null ? command.getWhere().getTo() : "null";
-				String whatStr = what == null ? "null": what.getName();
-				String valueStr = what == null ? "null": what.getValue() == null ? "null" : what.getValue().toString();
-				System.out.println(MessageFormat.format("Who [{0}] : Where [{1}] : what [{2}] : value [{3}]\n", command.getWho(), whereStr, whatStr, valueStr));
-			
+				List<What> whatList = command.getWhatList();
+				for (What what : whatList) {
+					String whereStr = command.getWhere()!= null ? command.getWhere().getUri() : "null";
+					String whatStr = what == null ? "null": what.getName();
+					String valueStr = what == null ? "null": what.getValue() == null ? "null" : what.getValue().toString();
+					System.out.println(MessageFormat.format("Who [{0}] : Where [{1}] : what [{2}] : value [{3}]\n", command.getWho(), whereStr, whatStr, valueStr));
+				}
 			}
 		});
 	}

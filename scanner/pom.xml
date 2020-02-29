@@ -94,9 +94,9 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>com.domosnap</groupId>
+			<groupId>com.domosnap.core</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.8</version>
+			<version>0.1.15</version>
 		</dependency>
 	</dependencies>
 </project>

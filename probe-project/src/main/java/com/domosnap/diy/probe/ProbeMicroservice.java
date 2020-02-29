@@ -1,5 +1,8 @@
 package com.domosnap.diy.probe;
 
+import com.domosnap.core.adapter.i2c.I2CControllerAdapter;
+import com.domosnap.core.adapter.onewire.OneWireControllerAdapter;
+
 /*
  * #%L
  * probe-project
@@ -25,9 +28,7 @@ package com.domosnap.diy.probe;
  */
 
 import com.domosnap.engine.Log;
-import com.domosnap.engine.adapter.i2c.I2CControllerAdapter;
 import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerAdapter;
-import com.domosnap.engine.adapter.onewire.OneWireControllerAdapter;
 import com.domosnap.engine.event.EventFactory;
 import com.domosnap.engine.event.EventToConsoleConsumer;
 

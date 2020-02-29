@@ -138,9 +138,9 @@
 	<!-- Dependecies Management -->
 	<dependencies>
 		<dependency>
-			<groupId>com.domosnap.engine</groupId>
+			<groupId>com.domosnap.core</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.14-SNAPSHOT</version>
+			<version>0.1.15</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse</groupId>

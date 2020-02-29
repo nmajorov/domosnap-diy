@@ -17,13 +17,13 @@
 		<module>uv-scanner</module>
 	</modules>
 
-	<distributionManagement>
+	<repositories>
 		<repository>
-			<id>bintray-arnauddegiuli-domosnap</id>
-			<name>arnauddegiuli-domosnap</name>
-			<url>https://api.bintray.com/maven/arnauddegiuli/domosnap/DomoSnap/;publish=1</url>
+			<id>bintray-domosnap-domosnap-core</id>
+			<name>domosnap-core</name>
+			<url>https://dl.bintray.com/domosnap/domosnap-core</url>
 		</repository>
-	</distributionManagement>
+	</repositories>
 
 	<inceptionYear>2017</inceptionYear>
 

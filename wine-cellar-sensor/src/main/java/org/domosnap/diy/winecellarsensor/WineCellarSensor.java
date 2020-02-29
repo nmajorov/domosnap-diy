@@ -36,7 +36,8 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 
-import com.domosnap.engine.adapter.i2c.I2CControllerAdapter;
+import com.domosnap.core.adapter.i2c.I2CControllerAdapter;
+import com.domosnap.core.consumer.eventToKafkaConsumer.EventToKafkaConsumer;
 import com.domosnap.engine.controller.humidity.HumiditySensor;
 import com.domosnap.engine.controller.pressure.PressureSensor;
 import com.domosnap.engine.controller.temperature.TemperatureSensor;
@@ -44,7 +45,6 @@ import com.domosnap.engine.controller.what.impl.DoubleState;
 import com.domosnap.engine.controller.what.impl.PercentageState;
 import com.domosnap.engine.controller.where.Where;
 import com.domosnap.engine.event.EventFactory;
-import com.domosnap.engine.event.eventToKafkaConsumer.EventToKafkaConsumer;
 import com.pi4j.component.lcd.LCDTextAlignment;
 import com.pi4j.component.lcd.impl.I2CLcdDisplay;
 

@@ -42,14 +42,14 @@
 	      <artifactId>vertx-web</artifactId>
 	    </dependency>
 	    <dependency>
-			<groupId>com.domosnap</groupId>
+			<groupId>com.domosnap.core</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.13-SNAPSHOT</version>
+			<version>0.1.15</version>
 		</dependency>
 		<dependency>
-			<groupId>com.domosnap</groupId>
-			<artifactId>EventToKafkaConsumer</artifactId>
-			<version>0.1.13-SNAPSHOT</version>
+			<groupId>com.domosnap.core.consumer</groupId>
+			<artifactId>eventToKafkaConsumer</artifactId>
+			<version>0.1.15</version>
 		</dependency>
 		<dependency>
 			<groupId>io.reactivex.rxjava2</groupId>

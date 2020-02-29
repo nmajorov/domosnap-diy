@@ -20,7 +20,7 @@
         <fabric8-vertx-maven-plugin.version>1.0.5</fabric8-vertx-maven-plugin.version>
         <licence.plugin.version>1.7</licence.plugin.version>
 		<file.encoding>UTF-8</file.encoding>
-		<domosnap.version>0.1.14-SNAPSHOT</domosnap.version>
+		<domosnap.version>0.1.15</domosnap.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -43,12 +43,12 @@
 	      <artifactId>vertx-web</artifactId>
 	    </dependency>
 	    <dependency>
-			<groupId>com.domosnap.engine</groupId>
+			<groupId>com.domosnap.core</groupId>
 			<artifactId>engine</artifactId>
 			<version>${domosnap.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.domosnap.engine.adapter</groupId>
+			<groupId>com.domosnap.core.adapter</groupId>
 			<artifactId>i2c</artifactId>
 			<version>${domosnap.version}</version>
 		</dependency>

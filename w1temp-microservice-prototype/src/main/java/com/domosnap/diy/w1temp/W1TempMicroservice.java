@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 
+import com.domosnap.core.consumer.eventToKafkaConsumer.EventToKafkaConsumer;
+
 /*
  * #%L
  * w1temp-microservice-prototype
@@ -34,13 +36,12 @@ import com.domosnap.engine.Log.Session;
 import com.domosnap.engine.adapter.core.Command;
 import com.domosnap.engine.adapter.core.Command.Type;
 import com.domosnap.engine.adapter.impl.openwebnet.OpenWebCommanderConsumer;
+import com.domosnap.engine.controller.heating.HeatingZone;
 import com.domosnap.engine.controller.temperature.TemperatureSensorStateName;
 import com.domosnap.engine.controller.what.What;
 import com.domosnap.engine.controller.what.impl.DoubleState;
 import com.domosnap.engine.controller.where.Where;
-import com.domosnap.engine.controller.who.Who;
 import com.domosnap.engine.event.EventFactory;
-import com.domosnap.engine.event.EventToKafkaConsumer;
 import com.pi4j.component.temperature.TemperatureSensor;
 import com.pi4j.io.w1.W1Master;
 import com.pi4j.temperature.TemperatureScale;
@@ -112,7 +113,7 @@ public class W1TempMicroservice extends AbstractVerticle {
 		            
 		            // Temp
 		            DoubleState whatState = new DoubleState(device.getTemperature(TemperatureScale.CELSIUS));
-		            EventFactory.SendEvent(Session.Command, new Command(Who.TEMPERATURE_SENSOR, new What(TemperatureSensorStateName.VALUE.name(), whatState), new Where("45"), Type.WRITE, null));
+		            EventFactory.SendEvent(Session.Command, new Command(HeatingZone.class, new What(TemperatureSensorStateName.value.name(), whatState), new Where("45"), Type.COMMAND, null));
 
 		        }
 			} catch (Exception e) {
