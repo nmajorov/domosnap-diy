@@ -36,7 +36,7 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 
-import com.domosnap.core.adapter.i2c.I2CControllerAdapter;
+import com.domosnap.core.adapter.i2c.I2CControllerService;
 import com.domosnap.core.consumer.eventToKafkaConsumer.EventToKafkaConsumer;
 import com.domosnap.engine.controller.humidity.HumiditySensor;
 import com.domosnap.engine.controller.pressure.PressureSensor;
@@ -82,7 +82,7 @@ public class WineCellarSensor extends AbstractVerticle {
 					EventFactory.addConsumer(new EventToKafkaConsumer(props));
 				}
 				
-				I2CControllerAdapter cs = new I2CControllerAdapter();
+				I2CControllerService cs = new I2CControllerService(null);
 				cs.connect();
 				int adress = 0x77;
 				TemperatureSensor ts = cs.createController(TemperatureSensor.class, new Where("bme/" + adress));

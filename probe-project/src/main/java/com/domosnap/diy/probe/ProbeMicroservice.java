@@ -1,7 +1,7 @@
 package com.domosnap.diy.probe;
 
-import com.domosnap.core.adapter.i2c.I2CControllerAdapter;
-import com.domosnap.core.adapter.onewire.OneWireControllerAdapter;
+import com.domosnap.core.adapter.i2c.I2CDiscoveryDeviceService;
+import com.domosnap.core.adapter.onewire.OneWireDiscoveryDeviceService;
 
 /*
  * #%L
@@ -28,7 +28,7 @@ import com.domosnap.core.adapter.onewire.OneWireControllerAdapter;
  */
 
 import com.domosnap.engine.Log;
-import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerAdapter;
+import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetDiscoveryService;
 import com.domosnap.engine.event.EventFactory;
 import com.domosnap.engine.event.EventToConsoleConsumer;
 
@@ -52,7 +52,7 @@ public class ProbeMicroservice extends AbstractVerticle {
 //		opt.setMaxInflightQueue(100);
 //		EventFactory.addConsumer(new EventToMqttConsumer("env-5291014.hidora.com", 11112, opt, getVertx(), null, true));
 
-		OpenWebNetControllerAdapter own = new OpenWebNetControllerAdapter("scs://12345@192.168.1.35:20000");
+		OpenWebNetDiscoveryService own = new OpenWebNetDiscoveryService("scs://12345@192.168.1.35:20000");
 		
 		vertx.executeBlocking(future -> {
 			own.connect();
@@ -60,11 +60,11 @@ public class ProbeMicroservice extends AbstractVerticle {
 		}, null);
 		
 		
-		OneWireControllerAdapter owa = new OneWireControllerAdapter();
+		OneWireDiscoveryDeviceService owa = new OneWireDiscoveryDeviceService();
 		owa.connect();
 		owa.scan(new ScanListerImpl("OneWire"));
 		
-		I2CControllerAdapter i2c = new I2CControllerAdapter();
+		I2CDiscoveryDeviceService i2c = new I2CDiscoveryDeviceService(null);
 		i2c.connect();
 		i2c.scan(new ScanListerImpl("I2C"));
 		

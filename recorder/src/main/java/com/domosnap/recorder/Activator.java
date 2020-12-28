@@ -45,7 +45,7 @@ public class Activator implements BundleActivator {
 		// register the service
 
 		logger.info("STARTING RECORDER SERVICE BUNDLE");
-		new RecorderServiceImpl("localhost", 1234, 12345);
+		new RecorderServiceImpl("scs://12345@localhost:1234");
 		logger.info("RECORDER SERVICE BUNDLE STARTED");
 	}
 

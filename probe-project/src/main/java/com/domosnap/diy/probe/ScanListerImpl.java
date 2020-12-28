@@ -28,7 +28,7 @@ import java.text.MessageFormat;
 
 import com.domosnap.engine.Log;
 import com.domosnap.engine.Log.Session;
-import com.domosnap.engine.adapter.core.ScanListener;
+import com.domosnap.engine.adapter.discovery.device.ScanListener;
 import com.domosnap.engine.controller.Controller;
 
 public class ScanListerImpl implements ScanListener {

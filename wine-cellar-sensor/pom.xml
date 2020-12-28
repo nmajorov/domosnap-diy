@@ -23,7 +23,7 @@
 		<vertx.verticle>org.domosnap.diy.winecellarsensor.WineCellarSensor</vertx.verticle>
 		<!-- Maven plugins -->
 		<fabric8-vertx-maven-plugin.version>1.0.5</fabric8-vertx-maven-plugin.version>
-		<domosnap.version>0.1.15</domosnap.version>
+		<domosnap.version>0.1.17</domosnap.version>
 		<pi4j.version>1.1</pi4j.version>
 	</properties>
 

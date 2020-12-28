@@ -25,16 +25,16 @@ package com.domosnap.recorder;
 
 import java.text.MessageFormat;
 
-import com.domosnap.engine.adapter.core.Command;
-import com.domosnap.engine.adapter.core.UnknownControllerListener;
-import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerAdapter;
+import com.domosnap.engine.adapter.controller.UnknownControllerListener;
+import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerService;
+import com.domosnap.engine.controller.Command;
 import com.domosnap.engine.controller.what.What;
 
 public class Listener {
 
 
 	public static void main(String[] args) {
-		OpenWebNetControllerAdapter monitor = new OpenWebNetControllerAdapter("openwebnet://12345@192.168.1.35:20000");
+		OpenWebNetControllerService monitor = new OpenWebNetControllerService("openwebnet://12345@192.168.1.35:20000");
 		monitor.addUnknowControllerListener(new UnknownControllerListener() {
 			@Override
 			public void foundUnknownController(Command command) {

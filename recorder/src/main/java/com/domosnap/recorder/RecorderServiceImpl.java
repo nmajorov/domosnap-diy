@@ -29,9 +29,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.domosnap.engine.adapter.core.Command;
-import com.domosnap.engine.adapter.core.UnknownControllerListener;
-import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerAdapter;
+import com.domosnap.engine.adapter.controller.UnknownControllerListener;
+import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerService;
+import com.domosnap.engine.controller.Command;
 import com.domosnap.engine.controller.heating.HeatingZone;
 import com.domosnap.engine.controller.heating.HeatingZoneStateName;
 import com.domosnap.engine.controller.what.What;
@@ -43,9 +43,9 @@ public class RecorderServiceImpl implements RecorderService {
 	public void init() {
  }
 	
-	public RecorderServiceImpl(String host, int port, int password) {
+	public RecorderServiceImpl(String uri) {
 		init();
-		OpenWebNetControllerAdapter monitor = new OpenWebNetControllerAdapter(host, port, password);
+		OpenWebNetControllerService monitor = new OpenWebNetControllerService(uri);
 		monitor.connect();
 		monitor.addUnknowControllerListener(new UnknownControllerListener() {
 			@Override

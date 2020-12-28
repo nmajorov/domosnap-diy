@@ -33,9 +33,9 @@ import com.domosnap.core.consumer.eventToKafkaConsumer.EventToKafkaConsumer;
 
 import com.domosnap.engine.Log;
 import com.domosnap.engine.Log.Session;
-import com.domosnap.engine.adapter.core.Command;
-import com.domosnap.engine.adapter.core.Command.Type;
 import com.domosnap.engine.adapter.impl.openwebnet.OpenWebCommanderConsumer;
+import com.domosnap.engine.controller.Command;
+import com.domosnap.engine.controller.Command.Type;
 import com.domosnap.engine.controller.heating.HeatingZone;
 import com.domosnap.engine.controller.temperature.TemperatureSensorStateName;
 import com.domosnap.engine.controller.what.What;
