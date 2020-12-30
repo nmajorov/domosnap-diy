@@ -11,7 +11,7 @@ import com.domosnap.core.consumer.eventToKafkaConsumer.EventToKafkaConsumer;
  * #%L
  * w1temp-microservice-prototype
  * %%
- * Copyright (C) 2017 - 2019 A. de Giuli
+ * Copyright (C) 2017 - 2020 A. de Giuli
  * %%
  * This file is part of HomeSnap done by Arnaud de Giuli (arnaud.degiuli(at)free.fr)
  *     helped by Olivier Driesbach (olivier.driesbach(at)gmail.com).
