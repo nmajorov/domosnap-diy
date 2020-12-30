@@ -1,13 +1,37 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: probe-project
 spec:
-  containers:
-  - image: adegiuli/probe-project-arm32v6
-    name: probe-project
-    livenessProbe:
-      httpGet:
-      path: /health
-      port: 8080
-      initialDelaySeconds: 15
+  replicas: 1
+  selector:
+    matchLabels:
+      app: probe-project
+  template:
+    metadata:
+      labels:
+        app: probe-project
+    spec:
+      containers:
+      - name: probe-project
+        image: adegiuli/probe-project-arm32v6
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 15
+        volumeMounts:
+        - name: config
+          mountPath: /opt/probe/conf
+          readOnly: true
+        - name: logs
+          mountPath: /opt/probe/logs
+      volumes:
+      - name: config
+        configMap:
+          name: probe-project
+      - name: logs
+        nfs:
+          server: 192.168.1.18
+          path: "/volume1/domosnap-probe"
+          

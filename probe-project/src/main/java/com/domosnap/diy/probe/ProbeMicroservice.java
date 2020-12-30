@@ -1,13 +1,10 @@
 package com.domosnap.diy.probe;
 
-import com.domosnap.core.adapter.i2c.I2CDiscoveryDeviceService;
-import com.domosnap.core.adapter.onewire.OneWireDiscoveryDeviceService;
-
 /*
  * #%L
  * probe-project
  * %%
- * Copyright (C) 2017 - 2019 A. de Giuli
+ * Copyright (C) 2017 - 2020 A. de Giuli
  * %%
  * This file is part of HomeSnap done by Arnaud de Giuli (arnaud.degiuli(at)free.fr)
  *     helped by Olivier Driesbach (olivier.driesbach(at)gmail.com).
@@ -30,7 +27,7 @@ import com.domosnap.core.adapter.onewire.OneWireDiscoveryDeviceService;
 import com.domosnap.engine.Log;
 import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetDiscoveryService;
 import com.domosnap.engine.event.EventFactory;
-import com.domosnap.engine.event.EventToConsoleConsumer;
+import com.domosnap.engine.event.EventToFileConsumer;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
@@ -41,12 +38,17 @@ import io.vertx.ext.web.Router;
 
 public class ProbeMicroservice extends AbstractVerticle {
 	
+	private static final String FILE_PATH_KEY = "file.path";
+	private static final String LOG_ENABLE = "log.enable";
+	
 	@Override
 	public void start() {
 
-		Log.getConfig().put("all", "true");
+		Log.getConfig().put("all", config().getValue(LOG_ENABLE, "false"));
 		
-		EventFactory.addConsumer(new EventToConsoleConsumer());
+		String path = config().getString(FILE_PATH_KEY, "/opt/probe/logs");
+		
+		EventFactory.addConsumer(new EventToFileConsumer(path));
 		
 //		MqttClientOptions opt = new MqttClientOptions();
 //		opt.setMaxInflightQueue(100);
@@ -60,14 +62,14 @@ public class ProbeMicroservice extends AbstractVerticle {
 		}, null);
 		
 		
-		OneWireDiscoveryDeviceService owa = new OneWireDiscoveryDeviceService();
-		owa.connect();
-		owa.scan(new ScanListerImpl("OneWire"));
-		
-		I2CDiscoveryDeviceService i2c = new I2CDiscoveryDeviceService(null);
-		i2c.connect();
-		i2c.scan(new ScanListerImpl("I2C"));
-		
+//		OneWireDiscoveryDeviceService owa = new OneWireDiscoveryDeviceService();
+//		owa.connect();
+//		owa.scan(new ScanListerImpl("OneWire"));
+//		
+//		I2CDiscoveryDeviceService i2c = new I2CDiscoveryDeviceService(null);
+//		i2c.connect();
+//		i2c.scan(new ScanListerImpl("I2C"));
+//		
 		
 		// Create healthcheck
 		HealthChecks hc = HealthChecks.create(vertx);
