@@ -10,18 +10,18 @@
 	</parent>
 
 	<groupId>com.domosnap.dyi.probe</groupId>
-	<artifactId>probe-project</artifactId>
+	<artifactId>scan-project</artifactId>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- vert.x properties -->
-		<vertx.version>3.7.0</vertx.version>
-		<vertx.verticle>com.domosnap.diy.probe.ProbeMicroservice</vertx.verticle>
+		<vertx.version>4.0.0</vertx.version>
+		<vertx.verticle>com.domosnap.diy.scan.ScanMicroservice</vertx.verticle>
 		<!-- Maven plugins -->
 		<fabric8-vertx-maven-plugin.version>1.0.5</fabric8-vertx-maven-plugin.version>
 		<licence.plugin.version>1.7</licence.plugin.version>
 		<file.encoding>UTF-8</file.encoding>
-		<domosnap.version>0.1.18-SNAPSHOT</domosnap.version>
+		<domosnap.version>0.1.19</domosnap.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -42,6 +42,10 @@
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-web-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.vertx</groupId>

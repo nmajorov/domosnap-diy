@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: probe-project
+  name: scan-project
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: probe-project
+      app: scan-project
   template:
     metadata:
       labels:
-        app: probe-project
+        app: scan-project
     spec:
       containers:
-      - name: probe-project
-        image: adegiuli/probe-project-arm32v6
+      - name: scan-project
+        image: adegiuli/scan-project-arm32v6
         livenessProbe:
           httpGet:
             path: /health
@@ -22,16 +22,16 @@ spec:
           initialDelaySeconds: 15
         volumeMounts:
         - name: config
-          mountPath: /opt/probe/conf
+          mountPath: /opt/scan/conf
           readOnly: true
         - name: logs
-          mountPath: /opt/probe/logs
+          mountPath: /opt/scan/logs
       volumes:
       - name: config
         configMap:
-          name: probe-project
+          name: scan-project
       - name: logs
         nfs:
           server: 192.168.1.18
-          path: "/volume1/domosnap-probe"
+          path: "/volume1/domosnap-scan"
           

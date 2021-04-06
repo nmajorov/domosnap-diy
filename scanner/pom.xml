@@ -96,7 +96,7 @@
 		<dependency>
 			<groupId>com.domosnap.core</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.15</version>
+			<version>0.1.19</version>
 		</dependency>
 	</dependencies>
 </project>

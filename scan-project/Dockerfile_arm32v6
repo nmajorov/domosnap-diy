@@ -1,0 +1,7 @@
+FROM registry.gitlab.com/domosnap/domosnap-registry/arm32v7-jdk13:latest
+
+WORKDIR /opt/scan
+COPY ./target/scan-project-*.jar ./probe-project.jar
+COPY ./src/main/configuration/default-configuration.json ./conf/config.json
+
+ENTRYPOINT ["java", "-jar", "scan-project.jar", "-Duser.dir=/tmp", "-conf ./conf/config.json"]

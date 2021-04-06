@@ -1,10 +1,12 @@
 package com.domosnap.diy.uv;
 
+import com.domosnap.core.adapter.i2c.I2CControllerService;
+
 /*
  * #%L
  * uv-scanner
  * %%
- * Copyright (C) 2017 - 2020 A. de Giuli
+ * Copyright (C) 2017 - 2021 A. de Giuli
  * %%
  * This file is part of HomeSnap done by Arnaud de Giuli (arnaud.degiuli(at)free.fr)
  *     helped by Olivier Driesbach (olivier.driesbach(at)gmail.com).
@@ -24,7 +26,6 @@ package com.domosnap.diy.uv;
  * #L%
  */
 
-import com.domosnap.core.adapter.i2c.I2CControllerAdapter;
 import com.domosnap.engine.controller.Controller;
 import com.domosnap.engine.controller.ControllerChangeListener;
 import com.domosnap.engine.controller.uv.UvSensor;
@@ -62,7 +63,7 @@ public class UVScannerMicroservice extends AbstractVerticle {
 
 		EventFactory.addConsumer(new EventToConsoleConsumer());
 
-		I2CControllerAdapter i2c = new I2CControllerAdapter();
+		I2CControllerService i2c = new I2CControllerService(null);
 		i2c.connect();
 		UvSensor sensor = i2c.createController(UvSensor.class, new Where("i2c://localhost/veml6070/38"));
 		sensor.addControllerChangeListener(new ControllerChangeListener() {

@@ -1,7 +1,0 @@
-FROM registry.gitlab.com/domosnap/domosnap-registry/arm32v7-jdk13:latest
-
-WORKDIR /opt/probe
-COPY ./target/probe-project-*.jar ./probe-project.jar
-COPY ./src/main/configuration/default-configuration.json ./conf/config.json
-
-ENTRYPOINT ["java", "-jar", "probe-project.jar", "-Duser.dir=/tmp", "-conf ./conf/config.json"]

@@ -1,10 +1,10 @@
-package com.domosnap.diy.probe;
+package com.domosnap.diy.scan;
 
 /*
  * #%L
- * probe-project
+ * scan-project
  * %%
- * Copyright (C) 2017 - 2020 A. de Giuli
+ * Copyright (C) 2017 - 2021 A. de Giuli
  * %%
  * This file is part of HomeSnap done by Arnaud de Giuli (arnaud.degiuli(at)free.fr)
  *     helped by Olivier Driesbach (olivier.driesbach(at)gmail.com).
@@ -26,8 +26,6 @@ package com.domosnap.diy.probe;
 
 import com.domosnap.engine.Log;
 import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetDiscoveryService;
-import com.domosnap.engine.event.EventFactory;
-import com.domosnap.engine.event.EventToFileConsumer;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
@@ -36,9 +34,8 @@ import io.vertx.ext.healthchecks.HealthChecks;
 import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.web.Router;
 
-public class ProbeMicroservice extends AbstractVerticle {
+public class ScanMicroservice extends AbstractVerticle {
 	
-	private static final String FILE_PATH_KEY = "file.path";
 	private static final String LOG_ENABLE = "log.enable";
 	
 	@Override
@@ -46,31 +43,14 @@ public class ProbeMicroservice extends AbstractVerticle {
 
 		Log.getConfig().put("all", config().getValue(LOG_ENABLE, "false"));
 		
-		String path = config().getString(FILE_PATH_KEY, "/opt/probe/logs");
-		
-		EventFactory.addConsumer(new EventToFileConsumer(path));
-		
-//		MqttClientOptions opt = new MqttClientOptions();
-//		opt.setMaxInflightQueue(100);
-//		EventFactory.addConsumer(new EventToMqttConsumer("env-5291014.hidora.com", 11112, opt, getVertx(), null, true));
-
 		OpenWebNetDiscoveryService own = new OpenWebNetDiscoveryService("scs://12345@192.168.1.35:20000");
 		
 		vertx.executeBlocking(future -> {
 			own.connect();
-			own.scan(new ScanListerImpl("scs"));
+			own.scan(new ScanListerImpl(vertx, "scs"));
 		}, null);
 		
-		
-//		OneWireDiscoveryDeviceService owa = new OneWireDiscoveryDeviceService();
-//		owa.connect();
-//		owa.scan(new ScanListerImpl("OneWire"));
-//		
-//		I2CDiscoveryDeviceService i2c = new I2CDiscoveryDeviceService(null);
-//		i2c.connect();
-//		i2c.scan(new ScanListerImpl("I2C"));
-//		
-		
+				
 		// Create healthcheck
 		HealthChecks hc = HealthChecks.create(vertx);
 
@@ -86,18 +66,18 @@ public class ProbeMicroservice extends AbstractVerticle {
 			System.out.println("Health started on port " + ar.result().actualPort());
 		});
 		
-		System.out.println("Probe Service Started");
+		System.out.println("Scan Service Started");
 	}
 
 	@Override
 	public void stop() throws Exception {
 		super.stop();
-		System.out.println("Prove Service Stopped");
+		System.out.println("Scan Service Stopped");
 	}
 
 	public static void main(String[] args) {
 //		io.vertx.core.Vertx vertx = io.vertx.core.Vertx.vertx();
 		Vertx vertx = Vertx.vertx();
-		vertx.deployVerticle(ProbeMicroservice.class.getName());
+		vertx.deployVerticle(ScanMicroservice.class.getName());
 	}
 }

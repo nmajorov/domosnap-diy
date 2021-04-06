@@ -4,7 +4,7 @@ package com.domosnap.scanner;
  * #%L
  * OpenWebNetScanner
  * %%
- * Copyright (C) 2017 - 2020 A. de Giuli
+ * Copyright (C) 2017 - 2021 A. de Giuli
  * %%
  * This file is part of HomeSnap done by A. de Giuli (arnaud.degiuli(at)free.fr).
  * 

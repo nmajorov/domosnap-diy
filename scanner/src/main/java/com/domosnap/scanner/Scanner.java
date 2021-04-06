@@ -4,7 +4,7 @@ package com.domosnap.scanner;
  * #%L
  * OpenWebNetScanner
  * %%
- * Copyright (C) 2017 - 2020 A. de Giuli
+ * Copyright (C) 2017 - 2021 A. de Giuli
  * %%
  * This file is part of HomeSnap done by A. de Giuli (arnaud.degiuli(at)free.fr).
  * 
@@ -26,18 +26,18 @@ package com.domosnap.scanner;
 import java.text.MessageFormat;
 import java.util.List;
 
-import com.domosnap.engine.adapter.core.Command;
-import com.domosnap.engine.adapter.core.UnknownControllerListener;
-import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerAdapter;
+import com.domosnap.engine.adapter.controller.UnknownControllerListener;
+import com.domosnap.engine.adapter.impl.openwebnet.OpenWebNetControllerService;
+import com.domosnap.engine.controller.Command;
 import com.domosnap.engine.controller.what.What;
 
 
 public class Scanner {
 
 	
-	private Scanner(String host, int port, int password) {
+	private Scanner(String uri) {
 		
-		OpenWebNetControllerAdapter o = new OpenWebNetControllerAdapter(host, port, password);
+		OpenWebNetControllerService o = new OpenWebNetControllerService(uri);
 		o.addUnknowControllerListener(new UnknownControllerListener() {
 
 			@Override
@@ -51,12 +51,13 @@ public class Scanner {
 				}
 			}
 		});
+		o.connect();
 	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new Scanner("192.168.1.35", 20000, 12345);
+		new Scanner("12345@192.168.1.35:20000");
 	}
 }

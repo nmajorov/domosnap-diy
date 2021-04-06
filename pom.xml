@@ -13,15 +13,14 @@
 		<module>scanner</module>
 		<module>wine-cellar-sensor</module>
 		<module>alexa-domosnap-skill</module>
-		<module>probe-project</module>
+		<module>scan-project</module>
 		<module>uv-scanner</module>
 	</modules>
 
 	<repositories>
 		<repository>
-			<id>bintray-domosnap-domosnap-core</id>
-			<name>domosnap-core</name>
-			<url>https://dl.bintray.com/domosnap/domosnap-core</url>
+			<id>gitlab-maven</id>
+			<url>https://gitlab.com/api/v4/groups/6848729/-/packages/maven</url>
 		</repository>
 	</repositories>
 
@@ -29,7 +28,7 @@
 
 	<organization>
 		<name>A. de Giuli</name>
-		<url>http://jeeasy.org</url>
+		<url>http://domosnap.com</url>
 	</organization>
 
 	<developers>
