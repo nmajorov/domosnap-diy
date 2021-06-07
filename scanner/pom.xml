@@ -17,6 +17,7 @@
 	<properties>
 		<licence.plugin.version>1.7</licence.plugin.version>
 		<file.encoding>UTF-8</file.encoding>
+		<domosnap.version>0.1.20-SNAPSHOT</domosnap.version>
 	</properties>
 	
 	<build>
@@ -96,8 +97,7 @@
 		<dependency>
 			<groupId>com.domosnap.core</groupId>
 			<artifactId>engine</artifactId>
-			<version>0.1.19</version>
+			<version>${domosnap.version}</version>
 		</dependency>
 	</dependencies>
 </project>
-

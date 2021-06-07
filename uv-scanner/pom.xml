@@ -20,7 +20,7 @@
         <fabric8-vertx-maven-plugin.version>1.0.5</fabric8-vertx-maven-plugin.version>
         <licence.plugin.version>1.7</licence.plugin.version>
 		<file.encoding>UTF-8</file.encoding>
-		<domosnap.version>0.1.19</domosnap.version>
+		<domosnap.version>0.1.20-SNAPSHOT</domosnap.version>
     </properties>
     <dependencyManagement>
         <dependencies>

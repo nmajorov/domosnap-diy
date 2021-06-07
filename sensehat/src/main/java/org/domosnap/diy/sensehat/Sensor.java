@@ -148,7 +148,7 @@ public class Sensor extends AbstractVerticle {
 	
 	public static void main(String[] args) {
 		io.vertx.core.Vertx vertx = io.vertx.core.Vertx.vertx();
-		vertx.deployVerticle(WineCellarSensor.class.getName());
+		vertx.deployVerticle(Sensor.class.getName());
 	}
 	
 }

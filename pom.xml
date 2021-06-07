@@ -8,13 +8,18 @@
 	<version>1.0-SNAPSHOT</version>
 
 	<modules>
+		<!--
 		<module>w1temp-microservice-prototype</module>
+		
 		<module>recorder</module>
+			<module>alexa-domosnap-skill</module>
+		-->
 		<module>scanner</module>
 		<module>wine-cellar-sensor</module>
-		<module>alexa-domosnap-skill</module>
+	
 		<module>scan-project</module>
 		<module>uv-scanner</module>
+		<module>sensehat</module>
 	</modules>
 
 	<repositories>

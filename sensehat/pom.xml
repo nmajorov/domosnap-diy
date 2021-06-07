@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.domosnap</groupId>
-	<artifactId>wine-cellar-sensor</artifactId>
+	<artifactId>sensehat</artifactId>
 	<packaging>jar</packaging>
 	<name>DomoSnapWineCellar</name>
 	<description>Domosnap PI sensehat example</description>
@@ -23,7 +23,7 @@
 		<vertx.verticle>org.domosnap.diy.sensehat.Sensor</vertx.verticle>
 		<!-- Maven plugins -->
 		<fabric8-vertx-maven-plugin.version>1.0.5</fabric8-vertx-maven-plugin.version>
-		<domosnap.version>0.1.19</domosnap.version>
+		<domosnap.version>0.1.20-SNAPSHOT</domosnap.version>
 		<pi4j.version>1.1</pi4j.version>
 	</properties>
 
